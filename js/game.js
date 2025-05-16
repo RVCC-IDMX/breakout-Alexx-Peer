@@ -143,7 +143,9 @@ export class Game {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     this.paddle.update();
+    this.ball.update();
     this.paddle.draw(this.ctx);
+    this.ball.draw(this.ctx);
 
     requestAnimationFrame(() => this.gameLoop());
 
