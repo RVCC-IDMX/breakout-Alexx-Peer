@@ -22,11 +22,18 @@ export class Game {
     // - score: set to 0
     // - lives: set to DEFAULTS.LIVES
     // - debugMessage: empty string for debug output
+    this.gameState = GAME_STATES.START;
+    this.score = 0;
+    this.lives = DEFAULTS.LIVES;
+    this.debugMessage = '';
 
     // TODO: Initialize empty arrays/objects for game entities
     // - paddle: set to null
     // - ball: set to null
     // - bricks: empty array
+    this.paddle = null;
+    this.ball = null;
+    this.bricks = [];
 
     // Game systems are provided for you
     this.ui = new UI(this);
@@ -35,6 +42,7 @@ export class Game {
 
     // TODO: Call the init() method to set up the game
     // - Call init()
+    this.init();
 
     // Set up canvas scale (provided for you)
     this.canvasScale = {
@@ -54,6 +62,9 @@ export class Game {
     // - Call createEntities() to create the paddle and ball
     // - Call setupBricks() to create the brick layout
     // - Use ui.showScreen(GAME_STATES.START) to show the start screen
+    this.createEntities();
+    this.setupBricks();
+    this.ui.showScreen(GAME_STATES.START);
   }
 
   // Create game entities
@@ -61,6 +72,8 @@ export class Game {
     // TODO: Create the paddle and ball
     // - Create a new Paddle instance and assign it to this.paddle
     // - Create a new Ball instance and assign it to this.ball
+    this.paddle = new Paddle(this);
+    this.ball = new Ball(this);
   }
 
   // Update canvas scale calculation (provided for you)
@@ -91,6 +104,12 @@ export class Game {
     // 2. Use ui.showScreen(GAME_STATES.PLAYING) to show the playing screen
     // 3. Connect the input handler to the paddle (this.input.setPaddle(this.paddle))
     // 4. Start the game loop (call gameLoop())
+
+    this.gameState = GAME_STATES.PLAYING;
+    this.ui.showScreen(GAME_STATES.PLAYING);
+    this.input.setPaddle(this.paddle);
+    this.gameLoop();
+
   }
 
   // Restart the game
@@ -116,6 +135,18 @@ export class Game {
     // 6. Check for win condition (all bricks broken)
     // 7. Render debug message if there is one
     // 8. Request the next animation frame to continue the loop
+
+    if (this.gameState !== GAME_STATES.PLAYING) {
+      return;
+    }
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.paddle.update();
+    this.paddle.draw(this.ctx);
+
+    requestAnimationFrame(() => this.gameLoop());
+
   }
 
   // Handle ball out of bounds

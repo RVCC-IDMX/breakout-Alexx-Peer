@@ -7,18 +7,18 @@ export class CollisionManager {
   constructor(game) {
     this.game = game;
   }
-  
+
   // Check for all collisions in the game
   checkCollisions() {
     if (!this.game.ball || !this.game.paddle) {
       return;
     }
-    
+
     // TODO: Call the methods to check different types of collisions
     // - Call checkPaddleCollision() to handle ball-paddle collisions
     // - Call checkBrickCollisions() to handle ball-brick collisions
   }
-  
+
   // Check if ball collides with paddle
   checkPaddleCollision() {
     // TODO: Implement paddle collision detection and response
@@ -32,7 +32,7 @@ export class CollisionManager {
     //    - Adjust the horizontal direction based on where the ball hit the paddle
     //      (This creates different bounce angles depending on where the ball hits)
   }
-  
+
   // Check if ball collides with any bricks
   checkBrickCollisions() {
     // TODO: Implement brick collision detection and response
@@ -45,7 +45,7 @@ export class CollisionManager {
     //      b. Add points to the score using game.addScore(DEFAULTS.POINTS_PER_BRICK)
     //      c. Call calculateBounceDirection() to determine how the ball should bounce
   }
-  
+
   // Calculate how the ball should bounce after hitting a brick
   calculateBounceDirection(ball, brick) {
     // TODO: Determine how the ball should bounce off a brick
