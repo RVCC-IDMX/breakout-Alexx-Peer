@@ -16,7 +16,8 @@ export const DEFAULTS = Object.freeze({
   BALL_SIZE: 10,
   PADDLE_WIDTH: 100,
   PADDLE_HEIGHT: 15,
-  POINTS_PER_BRICK: 10
+  POINTS_PER_BRICK: 10,
+  MAX_BALL_SPEED: 10
 });
 
 // Brick configuration

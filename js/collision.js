@@ -51,13 +51,18 @@ export class CollisionManager {
 
     // 3. If a collision is detected:
     if (collision) {
+      //increase speed on collision but not more than MAX_BALL_SPEED
+      ball.speed = Math.min(ball.speed + .2, DEFAULTS.MAX_BALL_SPEED);
+
       //    - Reverse the ball's vertical direction (set dy to negative)
-      ball.dy = -ball.speed;
+      const direction = -1;
+      ball.dy = direction * ball.speed;
 
       //    - Adjust the horizontal direction based on where the ball hit the paddle
       //      (This creates different bounce angles depending on where the ball hits)
       const hitPosition = (ball.x - paddle.x) / paddle.width;
       ball.dx = ball.speed * (hitPosition * 2 - 1) * 1.5;
+
     }
   }
 
@@ -82,6 +87,13 @@ export class CollisionManager {
 
         //      c. Call calculateBounceDirection() to determine how the ball should bounce
         this.calculateBounceDirection(ball, brick);
+
+        //increase ball speed on collision but not more than max
+        ball.speed = Math.min(ball.speed + 0.2, DEFAULTS.MAX_BALL_SPEED);
+
+        //continue direction
+        const direction = Math.sign(ball.dy);
+        ball.dy = direction * ball.speed;
       }
     }
   }

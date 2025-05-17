@@ -79,6 +79,9 @@ export class Ball {
     this.x = this.game.width / 2;
     this.y = this.game.height - 30;
 
+    //reset ball speed to default
+    this.speed = DEFAULTS.BALL_SPEED;
+
     // - Set position back to initial values
     // - Reset direction to initial values
     this.dx = this.speed;
