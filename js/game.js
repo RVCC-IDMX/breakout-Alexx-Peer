@@ -154,6 +154,8 @@ export class Game {
     // 2. Clear the canvas (ctx.clearRect)
     // 3. Update game entities (paddle and ball)
     // 4. Check for collisions (collisionManager.checkCollisions())
+    this.collisionManager.checkCollisions();
+
     // 5. Draw all game entities (paddle, ball, and all non-broken bricks)
     // 6. Check for win condition (all bricks broken)
     // 7. Render debug message if there is one
