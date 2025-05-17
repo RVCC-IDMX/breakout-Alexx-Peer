@@ -88,13 +88,36 @@ export class Game {
   setupBricks() {
     // TODO: Create the brick layout
     // 1. Clear the bricks array
+    this.bricks = [];
+
+    const rows = BRICK_CONFIG.ROWS;
+    const colms = BRICK_CONFIG.COLUMNS;
+    const brickWidth = BRICK_CONFIG.WIDTH;
+    const brickHeight = BRICK_CONFIG.HEIGHT;
+    const padding = BRICK_CONFIG.PADDING;
+    const offsetTop = BRICK_CONFIG.OFFSET_TOP;
+    const offsetLeft = BRICK_CONFIG.OFFSET_LEFT;
+    const colors = BRICK_CONFIG.COLORS;
+
     // 2. Use nested loops to create a grid of bricks
     //    - Outer loop for rows (BRICK_CONFIG.ROWS)
-    //    - Inner loop for columns (BRICK_CONFIG.COLUMNS)
-    // 3. For each brick:
-    //    - Calculate its position (x, y) using BRICK_CONFIG
-    //    - Assign a color based on the row (use BRICK_CONFIG.COLORS)
-    //    - Create a new Brick instance and add it to the bricks array
+    for (let row = 0; row < rows; row++) {
+
+      //    - Inner loop for columns (BRICK_CONFIG.COLUMNS)
+      for (let colm = 0; colm < colms; colm++) {
+
+        // 3. For each brick:
+        //    - Calculate its position (x, y) using BRICK_CONFIG
+        const x = offsetLeft + colm * (brickWidth + padding);
+        const y = offsetTop + row * (brickHeight + padding);
+
+        //    - Assign a color based on the row (use BRICK_CONFIG.COLORS)
+        const color = colors[row % colors.length];
+
+        //    - Create a new Brick instance and add it to the bricks array
+        this.bricks.push(new Brick(this, x, y, brickWidth, brickHeight, color));
+      }
+    }
   }
 
   // Start the game
@@ -144,8 +167,16 @@ export class Game {
 
     this.paddle.update();
     this.ball.update();
+
     this.paddle.draw(this.ctx);
     this.ball.draw(this.ctx);
+
+    // draw bricks
+    this.bricks.forEach(brick => {
+      if (!brick.broken) {
+        brick.draw(this.ctx);
+      }
+    });
 
     requestAnimationFrame(() => this.gameLoop());
 
