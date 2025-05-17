@@ -43,6 +43,33 @@ export class Game {
     this.collisionManager = new CollisionManager(this);
     this.input = new InputHandler(this);
 
+    //bind key event listener for pause
+    window.addEventListener('keydown', (esc) => {
+      if (esc.key === 'Escape') {
+        if (this.gameState === GAME_STATES.PLAYING) {
+          this.pauseGame();
+        } else if (this.gameState === GAME_STATES.PAUSED) {
+          this.resumeGame();
+        }
+      }
+    });
+
+    // Add event listeners for pause screen buttons
+    this.resumeButton = document.getElementById('resumeButton');
+    this.restartButton = document.getElementById('pauseRestartButton');
+
+    if (this.resumeButton) {
+      this.resumeButton.addEventListener('click', () => {
+        this.resumeGame();
+      });
+    }
+
+    if (this.restartButton) {
+      this.restartButton.addEventListener('click', () => {
+        this.restartGame();
+      });
+    }
+
     // - Call init()
     this.init();
 
@@ -254,6 +281,20 @@ export class Game {
 
     // 2. Update the UI stats
     this.ui.updateStats(this.score, this.lives);
+  }
+
+  // Pause the game
+  pauseGame() {
+    console.log('Game paused - showing pause screen');
+    this.gameState = GAME_STATES.PAUSED;
+    this.ui.showScreen(GAME_STATES.PAUSED);
+  }
+
+  // Resume the game
+  resumeGame() {
+    this.gameState = GAME_STATES.PLAYING;
+    this.ui.showScreen(GAME_STATES.PLAYING);
+    this.gameLoop();
   }
 
   // Debug message helper (provided for you)

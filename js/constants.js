@@ -4,6 +4,7 @@
 export const GAME_STATES = Object.freeze({
   START: 'start',
   PLAYING: 'playing',
+  PAUSE: 'pause',
   GAMEOVER: 'gameover',
   WIN: 'win'
 });
